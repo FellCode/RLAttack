@@ -39,6 +39,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit = playerGO.GetComponent<Unit>();
         GameObject enemyGO = Instantiate(enemyPrefab,enemyBattleStation);
         enemyUnit = enemyGO.GetComponent<Unit>();
+        playerHUD.ToggleMenu(false);
 
         dialogueText.text = "A wild " + enemyUnit.unitName + " approaches";
 
@@ -62,10 +63,11 @@ public class BattleSystem : MonoBehaviour
 
     */
     IEnumerator PlayerAttack(){
+        playerHUD.ToggleMenu(false);
         bool isDead = false;
         int critMultiplier = checkCritMultiplier(playerUnit);
         string hitText;
-        if(checkHit(95)){      
+        if(checkHit(playerUnit.baseHitChance)){      
             isDead = enemyUnit.TakeDamage(playerUnit.damage*critMultiplier);
             hitText = critMultiplier == 2 ?  "CRITICAL HIT" : "Attack successful";
             dialogueText.text = hitText;
@@ -108,16 +110,15 @@ public class BattleSystem : MonoBehaviour
         bool isDead = false;
         int critMultiplier = checkCritMultiplier(enemyUnit);
         string hitText;
-        playerHUD.ToggleMenu(false);
         dialogueText.text = enemyUnit.unitName + " attacks!";
 
         yield return new WaitForSeconds(2f);
 
-        if(checkHit(80)){      
+        if(checkHit(enemyUnit.baseHitChance)){      
             isDead = playerUnit.TakeDamage(enemyUnit.damage*critMultiplier);
             hitText = critMultiplier == 2 ?  "CRITICAL HIT" : enemyUnit.unitName + " attacked successfully";
             dialogueText.text = hitText;
-            playerHUD.SetHP(enemyUnit.currentHP);
+            playerHUD.SetHP(playerUnit.currentHP);
         } else {
             dialogueText.text = enemyUnit.unitName + " missed";
         }

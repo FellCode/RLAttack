@@ -133,3 +133,4 @@ MonoBehaviour:
   maxHP: 30
   currentHP: 30
   baseCritChance: 80
+  baseHitChance: 95
