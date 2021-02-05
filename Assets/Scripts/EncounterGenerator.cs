@@ -61,7 +61,7 @@ public class EncounterGenerator : MonoBehaviour
     //Screen Transition
     currentEncounterThreshold = DEFAULT_ENCOUNTER_THRESHOLD;
     SceneData.immunityCounter = 3;
-    SceneData.playerPosition = player.transform.localPosition;
+    SceneData.playerPosition = player.transform.position;
     SceneManager.LoadScene("Combat");
     }
 }
