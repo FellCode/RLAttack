@@ -160,6 +160,7 @@ MonoBehaviour:
   playerHUD: {fileID: 1082147386}
   enemyHUD: {fileID: 89667421}
   dialogueText: {fileID: 1437991200}
+  letterPause: 0.02
 --- !u!4 &18791
 Transform:
   m_ObjectHideFlags: 0
@@ -580,6 +581,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274788627}
   m_CullTransparentMesh: 0
+--- !u!1001 &421945324
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7272118411194203466, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: dmg
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203466, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: hitChance
+      value: 95
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203466, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: attackName
+      value: Punch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203466, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: critChance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0450515
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.142178
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 76.822945
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203467, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272118411194203468, guid: 031a6325d09cf43c3a307c589fe82dda,
+        type: 3}
+      propertyPath: m_Name
+      value: Punch
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 031a6325d09cf43c3a307c589fe82dda, type: 3}
 --- !u!1 &465116533
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14324492, g: 0.8207547, b: 0.27907255, a: 1}
+  m_Color: {r: 0.81960785, g: 0.14509803, b: 0.19079542, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -849,7 +939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &573383831
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1287,7 +1377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14324492, g: 0.8207547, b: 0.27907255, a: 1}
+  m_Color: {r: 0.81960785, g: 0.14509805, b: 0.19215687, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2312,6 +2402,54 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1390460521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1390460523}
+  - component: {fileID: 1390460522}
+  m_Layer: 0
+  m_Name: EnemyType
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1390460522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390460521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae488c616ee34aabb376209c5767e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  hp: 0
+  level: 0
+  attacks: []
+  sprite: {fileID: 0}
+--- !u!4 &1390460523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390460521}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0450515, y: -1.142178, z: 76.822945}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1437991198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2381,7 +2519,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Insert Dialogue Here
+  m_Text: Insert Text Here
 --- !u!222 &1437991201
 CanvasRenderer:
   m_ObjectHideFlags: 0

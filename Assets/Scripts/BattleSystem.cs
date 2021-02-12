@@ -26,11 +26,17 @@ public class BattleSystem : MonoBehaviour
 
     public Text dialogueText;
 
+    public float letterPause = 0.2f;
+
+    private string currentMessage = "";
+
     // Start is called before the first frame update
     void Start()
     {
         state = BattleState.START;
+        dialogueText.text = currentMessage;
         StartCoroutine(SetupBattle());
+        
     }
 
 
@@ -41,7 +47,8 @@ public class BattleSystem : MonoBehaviour
         enemyUnit = enemyGO.GetComponent<Unit>();
         playerHUD.ToggleMenu(false);
 
-        dialogueText.text = "A wild " + enemyUnit.unitName + " approaches";
+        currentMessage= "A wild " + enemyUnit.unitName + " approaches";
+        StartCoroutine(TypeText(currentMessage));
 
         playerHUD.SetupHUD(playerUnit);
         enemyHUD.SetupHUD(enemyUnit);
@@ -66,15 +73,14 @@ public class BattleSystem : MonoBehaviour
         playerHUD.ToggleMenu(false);
         bool isDead = false;
         int critMultiplier = checkCritMultiplier(playerUnit);
-        string hitText;
         if(checkHit(playerUnit.baseHitChance)){      
             isDead = enemyUnit.TakeDamage(playerUnit.damage*critMultiplier);
-            hitText = critMultiplier == 2 ?  "CRITICAL HIT" : "Attack successful";
-            dialogueText.text = hitText;
+            currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : "Attack successful";
             enemyHUD.SetHP(enemyUnit.currentHP);
         } else {
-            dialogueText.text = "You missed";
+            currentMessage = "You missed";
         }
+        StartCoroutine(TypeText(currentMessage));
         
         yield return new WaitForSeconds(2f);
 
@@ -90,7 +96,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerHeal(){
         int amount = Random.Range(1,6);
-        dialogueText.text = playerUnit.unitName + " heals himself for " + amount + " points";
+        currentMessage = playerUnit.unitName + " heals himself for " + amount + " points";
+        StartCoroutine(TypeText(currentMessage));
         playerUnit.HealSelf(amount);
         playerHUD.SetHP(playerUnit.currentHP);
         
@@ -103,24 +110,26 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn(){
         playerHUD.ToggleMenu(true);
-        dialogueText.text = "Choose an action:";
+        currentMessage = "Choose an action:";
+        StartCoroutine(TypeText(currentMessage));
     }
 
     IEnumerator EnemyTurn(){
         bool isDead = false;
         int critMultiplier = checkCritMultiplier(enemyUnit);
-        string hitText;
-        dialogueText.text = enemyUnit.unitName + " attacks!";
+        currentMessage = enemyUnit.unitName + " attacks!";
+        StartCoroutine(TypeText(currentMessage));
 
         yield return new WaitForSeconds(2f);
 
         if(checkHit(enemyUnit.baseHitChance)){      
             isDead = playerUnit.TakeDamage(enemyUnit.damage*critMultiplier);
-            hitText = critMultiplier == 2 ?  "CRITICAL HIT" : enemyUnit.unitName + " attacked successfully";
-            dialogueText.text = hitText;
+            currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : enemyUnit.unitName + " attacked successfully";
+            StartCoroutine(TypeText(currentMessage));
             playerHUD.SetHP(playerUnit.currentHP);
         } else {
-            dialogueText.text = enemyUnit.unitName + " missed";
+            currentMessage = enemyUnit.unitName + " missed";
+            StartCoroutine(TypeText(currentMessage));
         }
         
         yield return new WaitForSeconds(1f);
@@ -167,5 +176,14 @@ public class BattleSystem : MonoBehaviour
     int checkCritMultiplier(Unit unit){
         return Random.Range(1,101) <= unit.baseCritChance ? 2 : 1;
     }
+
+    IEnumerator TypeText (string message) {
+        Debug.Log(message);
+         dialogueText.text = "";
+         foreach (char letter in message.ToCharArray()) {
+             dialogueText.text += letter;
+             yield return new WaitForSeconds (letterPause);
+         }
+     }
     
 }

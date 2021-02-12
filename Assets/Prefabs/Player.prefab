@@ -134,3 +134,8 @@ MonoBehaviour:
   currentHP: 30
   baseCritChance: 80
   baseHitChance: 95
+  attacks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

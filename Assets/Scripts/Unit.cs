@@ -17,6 +17,8 @@ public class Unit : MonoBehaviour
 
    public int baseHitChance;
 
+   public List <Attack> attacks;
+
    public bool TakeDamage(int dmg){
       currentHP -= dmg;
       StartCoroutine(Shake(shakeDuration,shakeMagnitude));
