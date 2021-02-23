@@ -31,7 +31,7 @@ public class BattleSystem : MonoBehaviour
     private string currentMessage = "";
 
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
         state = BattleState.START;
         dialogueText.text = currentMessage;
@@ -72,8 +72,8 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerAttack(){
         playerHUD.ToggleMenu(false);
         bool isDead = false;
-        int critMultiplier = checkCritMultiplier(playerUnit);
-        if(checkHit(playerUnit.baseHitChance)){      
+        int critMultiplier = CheckCritMultiplier(playerUnit);
+        if(CheckHit(playerUnit.baseHitChance)){      
             isDead = enemyUnit.TakeDamage(playerUnit.damage*critMultiplier);
             currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : "Attack successful";
             enemyHUD.SetHP(enemyUnit.currentHP);
@@ -116,13 +116,13 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn(){
         bool isDead = false;
-        int critMultiplier = checkCritMultiplier(enemyUnit);
+        int critMultiplier = CheckCritMultiplier(enemyUnit);
         currentMessage = enemyUnit.unitName + " attacks!";
         StartCoroutine(TypeText(currentMessage));
 
         yield return new WaitForSeconds(2f);
 
-        if(checkHit(enemyUnit.baseHitChance)){      
+        if(CheckHit(enemyUnit.baseHitChance)){      
             isDead = playerUnit.TakeDamage(enemyUnit.damage*critMultiplier);
             currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : enemyUnit.unitName + " attacked successfully";
             StartCoroutine(TypeText(currentMessage));
@@ -169,11 +169,11 @@ public class BattleSystem : MonoBehaviour
         SceneManager.LoadScene("Overworld");
     }
 
-    bool checkHit(int hitChance){
+    bool CheckHit(int hitChance){
         return Random.Range(1,101) <= hitChance;
     }
 
-    int checkCritMultiplier(Unit unit){
+    int CheckCritMultiplier(Unit unit){
         return Random.Range(1,101) <= unit.baseCritChance ? 2 : 1;
     }
 

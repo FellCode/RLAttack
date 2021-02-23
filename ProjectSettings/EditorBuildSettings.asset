@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: /Users/felixvogel/Library/Mobile Documents/com~apple~CloudDocs/Documents/Projects/RLAttack/Assets/Scenes/Combat.unity
+    path: Assets/Scenes/Combat.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: /Users/felixvogel/Library/Mobile Documents/com~apple~CloudDocs/Documents/Projects/RLAttack/Assets/Scenes/Overworld.unity
+    path: Assets/Scenes/Overworld.unity
     guid: d21e0bf0350054b2eb4d0acaacdaa846
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: bf9f276e3aae74756ad10d995db318c2
   m_configObjects: {}

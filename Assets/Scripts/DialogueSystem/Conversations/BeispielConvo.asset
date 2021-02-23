@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8314cadc0746164084455b58727f649, type: 3}
+  m_Name: BeispielConvo
+  m_EditorClassIdentifier: 
+  allLines:
+  - speaker: {fileID: 11400000, guid: fa53fa128e496594c86378f2b795ea64, type: 2}
+    dialogue: Hallo Gustav!
+  - speaker: {fileID: 11400000, guid: 6c59379fda31383408c8c67d8b58f762, type: 2}
+    dialogue: "Ich mag Z\xFCge"
+  - speaker: {fileID: 11400000, guid: fa53fa128e496594c86378f2b795ea64, type: 2}
+    dialogue: Ich auch, wir sollten Freunde werden
+  - speaker: {fileID: 11400000, guid: 98b530f9a16fe5445b25a673ad1d01c1, type: 2}
+    dialogue: "Hey Finger weg von meinen Z\xFCgen!"
