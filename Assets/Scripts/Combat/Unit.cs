@@ -9,15 +9,10 @@ public class Unit : MonoBehaviour
    public string unitName;
    public int unitLevel;
 
-   public int damage;
    public int maxHP;
    public int currentHP;
 
-   public int baseCritChance;
-
-   public int baseHitChance;
-
-   public List <Attack> attacks;
+   public MoveSet moveSet;
 
    public bool TakeDamage(int dmg){
       currentHP -= dmg;

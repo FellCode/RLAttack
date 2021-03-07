@@ -30,7 +30,6 @@ public class BattleSystem : MonoBehaviour
 
     private string currentMessage = "";
 
-    // Start is called before the first frame update
     void Start() 
     {
         state = BattleState.START;
@@ -46,12 +45,20 @@ public class BattleSystem : MonoBehaviour
         GameObject enemyGO = Instantiate(enemyPrefab,enemyBattleStation);
         enemyUnit = enemyGO.GetComponent<Unit>();
         playerHUD.ToggleMenu(false);
+        playerHUD.ToggleAttackMenu(false);
 
-        currentMessage= "A wild " + enemyUnit.unitName + " approaches";
+        currentMessage = "A wild " + enemyUnit.unitName + " approaches";
         StartCoroutine(TypeText(currentMessage));
+
+
 
         playerHUD.SetupHUD(playerUnit);
         enemyHUD.SetupHUD(enemyUnit);
+
+        playerHUD.attack1.text = playerUnit.moveSet.getAttackByIndex(0).attackName;
+        playerHUD.attack2.text = playerUnit.moveSet.getAttackByIndex(1).attackName;
+        playerHUD.attack3.text = playerUnit.moveSet.getAttackByIndex(2).attackName;
+        playerHUD.attack4.text = playerUnit.moveSet.getAttackByIndex(3).attackName;
 
         yield return new WaitForSeconds(2f);
 
@@ -69,12 +76,16 @@ public class BattleSystem : MonoBehaviour
 
 
     */
-    IEnumerator PlayerAttack(){
+    IEnumerator PlayerAttack(int attackIndex){
         playerHUD.ToggleMenu(false);
+        playerHUD.ToggleAttackMenu(false);
+
+        Attack currentAttack = playerUnit.moveSet.getAttackByIndex(attackIndex);
+
         bool isDead = false;
-        int critMultiplier = CheckCritMultiplier(playerUnit);
-        if(CheckHit(playerUnit.baseHitChance)){      
-            isDead = enemyUnit.TakeDamage(playerUnit.damage*critMultiplier);
+        int critMultiplier = CheckCritMultiplier(currentAttack);
+        if(CheckHit(currentAttack)){      
+            isDead = enemyUnit.TakeDamage(currentAttack.damage*critMultiplier);
             currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : "Attack successful";
             enemyHUD.SetHP(enemyUnit.currentHP);
         } else {
@@ -116,14 +127,19 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn(){
         bool isDead = false;
-        int critMultiplier = CheckCritMultiplier(enemyUnit);
+        int attackIndex = Random.Range(0, 3);
+        Attack currentAttack = enemyUnit.moveSet.getAttackByIndex(attackIndex);
+
+        Debug.Log("Dwayne setzt " + currentAttack.name + " ein, mit " + currentAttack.damage + " und einer critChance von " + currentAttack.critChance + "und einer HitChance von " + currentAttack.hitChance);
+
+        int critMultiplier = CheckCritMultiplier(currentAttack);
         currentMessage = enemyUnit.unitName + " attacks!";
         StartCoroutine(TypeText(currentMessage));
 
         yield return new WaitForSeconds(2f);
 
-        if(CheckHit(enemyUnit.baseHitChance)){      
-            isDead = playerUnit.TakeDamage(enemyUnit.damage*critMultiplier);
+        if(CheckHit(currentAttack)){      
+            isDead = playerUnit.TakeDamage(currentAttack.damage*critMultiplier);
             currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : enemyUnit.unitName + " attacked successfully";
             StartCoroutine(TypeText(currentMessage));
             playerHUD.SetHP(playerUnit.currentHP);
@@ -145,11 +161,24 @@ public class BattleSystem : MonoBehaviour
     }
 
     public void OnAttackButton(){
-        if(state != BattleState.PLAYERTURN){
+        if (state != BattleState.PLAYERTURN)
+        {
             return;
         }
 
-        StartCoroutine(PlayerAttack());
+        playerHUD.ToggleMenu(false);
+        playerHUD.ToggleAttackMenu(true);
+
+        
+    }
+
+    public void OnMoveButton(int index)
+    {
+        if (state != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+        StartCoroutine(PlayerAttack(index));
     }
 
     public void OnHealButton(){
@@ -169,16 +198,15 @@ public class BattleSystem : MonoBehaviour
         SceneManager.LoadScene("Overworld");
     }
 
-    bool CheckHit(int hitChance){
-        return Random.Range(1,101) <= hitChance;
+    bool CheckHit(Attack currentAttack)
+    {
+        return Random.Range(1,101) <= currentAttack.hitChance;
     }
 
-    int CheckCritMultiplier(Unit unit){
-        return Random.Range(1,101) <= unit.baseCritChance ? 2 : 1;
+    int CheckCritMultiplier(Attack currentAttack){
+        return Random.Range(1,101) <= currentAttack.critChance ? 2 : 1;
     }
-
     IEnumerator TypeText (string message) {
-        Debug.Log(message);
          dialogueText.text = "";
          foreach (char letter in message.ToCharArray()) {
              dialogueText.text += letter;
