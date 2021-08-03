@@ -6,16 +6,22 @@ using UnityEngine;
     {
         public float speed;
 
+        public LayerMask mask;
+
         private Animator animator;
 
         public bool isMoving=false;
 
         public bool canAct = true;
 
+        private bool canInteractwithObject = false;   
+
         private static TopDownCharacterController instance;
 
+    
 
-        private void Awake()
+
+    private void Awake()
         {
             if (instance == null)
             {
@@ -72,7 +78,11 @@ using UnityEngine;
             animator.SetBool("IsMoving", dir.magnitude > 0);
 
             GetComponent<Rigidbody2D>().velocity = speed * dir;
-        
+
+            if(Input.GetKey(KeyCode.Space) && canInteractwithObject && dir.y == 1)
+            {
+                Debug.Log("Ich interagiere mit Zeug");
+            }            
         }
     }
 
@@ -85,5 +95,18 @@ using UnityEngine;
         instance.canAct = canAct;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         isMoving = false;
+    }
+
+    public void canInteract(bool interact)
+    {
+        this.canInteractwithObject = interact;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Interactable"))
+        {
+            Debug.Log("Trigger");
+        }
     }
 }

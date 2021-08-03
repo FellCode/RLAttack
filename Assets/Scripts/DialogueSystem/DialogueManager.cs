@@ -57,10 +57,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void ReadNext()
-    {   
+    {
+        if (currentConvo == null)
+            return;
 
-        
-        if(currentIndex > currentConvo.GetLength())
+
+        if (currentIndex > currentConvo.GetLength())
         {
             instance.anim.SetBool("isOpen", false);
             instance.player.GetComponent<TopDownCharacterController>().toggleMovement(true);
