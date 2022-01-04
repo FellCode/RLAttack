@@ -130,21 +130,20 @@ public class BattleSystem : MonoBehaviour
         int attackIndex = Random.Range(0, 3);
         Attack currentAttack = enemyUnit.moveSet.getAttackByIndex(attackIndex);
 
-        Debug.Log("Dwayne setzt " + currentAttack.name + " ein, mit " + currentAttack.damage + " und einer critChance von " + currentAttack.critChance + "und einer HitChance von " + currentAttack.hitChance);
 
         int critMultiplier = CheckCritMultiplier(currentAttack);
-        currentMessage = enemyUnit.unitName + " attacks!";
+        currentMessage = $"{enemyUnit.unitName} attacks!";
         StartCoroutine(TypeText(currentMessage));
 
         yield return new WaitForSeconds(2f);
 
         if(CheckHit(currentAttack)){      
             isDead = playerUnit.TakeDamage(currentAttack.damage*critMultiplier);
-            currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : enemyUnit.unitName + " attacked successfully";
+            currentMessage = critMultiplier == 2 ?  "CRITICAL HIT" : $"{enemyUnit.unitName} attacked successfully";
             StartCoroutine(TypeText(currentMessage));
             playerHUD.SetHP(playerUnit.currentHP);
         } else {
-            currentMessage = enemyUnit.unitName + " missed";
+            currentMessage = $"{enemyUnit.unitName} missed";
             StartCoroutine(TypeText(currentMessage));
         }
         
