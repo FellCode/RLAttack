@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     private Conversation currentConvo;
     private Animator anim;
     private Coroutine typing;
-    private bool called = false;
+    private DialogueState state = DialogueState.DONE;
 
     [SerializeField] GameObject player;
 
@@ -33,39 +33,49 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.E))
         {
-            if (!called)
-            {
-                ReadNext();
-                called = true;
-            }
-        }  
+                    ReadNext();
+        } 
     }
 
 
     public static void StartConversation(Conversation convo)
     {
-        instance.player.GetComponent<TopDownCharacterController>().toggleMovement(false);
-        instance.anim.SetBool("isOpen", true);
-        instance.currentIndex = 0;
-        instance.currentConvo = convo;
-        instance.speakerName.text = "";
-        instance.dialogueText.text = "";
-        instance.navButtonText.text = "V";
-        instance.ReadNext();
+       if (instance.state.Equals(DialogueState.DONE))
+        {
+            instance.player.GetComponent<TopDownCharacterController>().toggleMovement(false);
+            instance.anim.SetBool("isOpen", true);
+            instance.currentIndex = 0;
+            instance.currentConvo = convo;
+            instance.speakerName.text = "";
+            instance.dialogueText.text = "";
+            instance.navButtonText.text = "V";
+            instance.state = DialogueState.PROGRESS;
+        }
+    }
+
+    public static bool IsOngoing()
+    {
+        return instance.state.Equals(DialogueState.PROGRESS);
     }
 
     public void ReadNext()
     {
+        if (state.Equals(DialogueState.TYPING))
+        {
+            return;
+        }
+
+        state = DialogueState.PROGRESS;
         if (currentConvo == null)
             return;
-
 
         if (currentIndex > currentConvo.GetLength())
         {
             instance.anim.SetBool("isOpen", false);
             instance.player.GetComponent<TopDownCharacterController>().toggleMovement(true);
+            state = DialogueState.DONE;
             return;
         }
 
@@ -89,13 +99,12 @@ public class DialogueManager : MonoBehaviour
         speakerSprite.sprite = currentConvo.GetLineByIndex(currentIndex).speaker.GetSprite();
         
         instance.currentIndex++;
-        
- 
     }
 
 
     public IEnumerator TypeText(string text)
     {
+        state = DialogueState.TYPING;
         dialogueText.text = "";
         bool complete = false;
         int index = 0;
@@ -115,6 +124,14 @@ public class DialogueManager : MonoBehaviour
             }
         }
         typing = null;
-        called = false;
+        state = DialogueState.PROGRESS;
+    }
+
+    private enum DialogueState
+    {
+        START,
+        PROGRESS,
+        DONE,
+        TYPING
     }
 }

@@ -96,17 +96,4 @@ using UnityEngine;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         isMoving = false;
     }
-
-    public void canInteract(bool interact)
-    {
-        this.canInteractwithObject = interact;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Interactable"))
-        {
-            Debug.Log("Trigger");
-        }
-    }
 }
