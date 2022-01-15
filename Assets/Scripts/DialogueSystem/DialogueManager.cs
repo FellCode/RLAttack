@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public partial class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI speakerName, dialogueText, navButtonText;
     public Image speakerSprite;
@@ -12,18 +12,17 @@ public class DialogueManager : MonoBehaviour
     private static DialogueManager instance;
 
     private Conversation currentConvo;
-    private Animator anim;
-    private Coroutine typing;
+    private Animator Animator;
     private DialogueState state = DialogueState.DONE;
+    private TopDownCharacterController PlayerController;
 
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject Player;
 
     private void Awake()
     {
        if(instance == null)
         {
             instance = this;
-            anim = GetComponent<Animator>();
         } 
         else
         {
@@ -31,11 +30,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Animator = GetComponent<Animator>();
+        PlayerController = Player.GetComponent<TopDownCharacterController>();
+    }
+
     public void Update()
     {
         if (Input.GetKey(KeyCode.E))
         {
-                    ReadNext();
+            ReadNext();
         } 
     }
 
@@ -44,8 +49,8 @@ public class DialogueManager : MonoBehaviour
     {
        if (instance.state.Equals(DialogueState.DONE))
         {
-            instance.player.GetComponent<TopDownCharacterController>().toggleMovement(false);
-            instance.anim.SetBool("isOpen", true);
+            instance.PlayerController.enabled = false;
+            instance.Animator.SetBool("isOpen", true);
             instance.currentIndex = 0;
             instance.currentConvo = convo;
             instance.speakerName.text = "";
@@ -73,8 +78,8 @@ public class DialogueManager : MonoBehaviour
 
         if (currentIndex > currentConvo.GetLength())
         {
-            instance.anim.SetBool("isOpen", false);
-            instance.player.GetComponent<TopDownCharacterController>().toggleMovement(true);
+            Animator.SetBool("isOpen", false);
+            PlayerController.enabled = true;
             state = DialogueState.DONE;
             return;
         }
@@ -83,22 +88,15 @@ public class DialogueManager : MonoBehaviour
             navButtonText.text = "X";
         }
 
-        if(typing == null)
-        {
-            typing = instance.StartCoroutine(TypeText(currentConvo.GetLineByIndex(currentIndex).dialogue));
-        }
-        else
-        {
-            instance.StopCoroutine(typing);
-            typing = null;
-            typing = instance.StartCoroutine(TypeText(currentConvo.GetLineByIndex(currentIndex).dialogue));
-        }
+        string Dialogue = currentConvo.GetLineByIndex(currentIndex).dialogue;
+        string SpeakerName = currentConvo.GetLineByIndex(currentIndex).speaker.GetName();
+        Sprite SpeakerSprite = currentConvo.GetLineByIndex(currentIndex).speaker.GetSprite();
 
-
-        speakerName.text = currentConvo.GetLineByIndex(currentIndex).speaker.GetName();
-        speakerSprite.sprite = currentConvo.GetLineByIndex(currentIndex).speaker.GetSprite();
-        
-        instance.currentIndex++;
+        speakerName.text = SpeakerName;
+        speakerSprite.sprite = SpeakerSprite;
+        StartCoroutine(TypeText(Dialogue));
+      
+        currentIndex++;
     }
 
 
@@ -123,7 +121,6 @@ public class DialogueManager : MonoBehaviour
                 index++;
             }
         }
-        typing = null;
         state = DialogueState.PROGRESS;
     }
 
@@ -135,3 +132,5 @@ public class DialogueManager : MonoBehaviour
         TYPING
     }
 }
+
+

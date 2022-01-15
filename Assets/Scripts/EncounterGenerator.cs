@@ -24,7 +24,7 @@ public class EncounterGenerator : MonoBehaviour
   }
 
   private void Update() {    
-    if(playerController.charIsMoving()){
+    if(playerController.CharIsMoving()){
       if(Time.time>=nextUpdate){
         nextUpdate=Mathf.FloorToInt(Time.time)+1;
         checkEncouter();
