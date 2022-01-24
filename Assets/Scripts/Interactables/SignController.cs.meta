@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: d0e366edc87bddb489874649ccf7b8f5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - convo: {fileID: 11400000, guid: 4ecbaeaec350474428e228f64e8f9917, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

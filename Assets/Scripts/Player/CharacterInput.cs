@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterInput : MonoBehaviour, ICharacterInput
+public class CharacterInput : MonoBehaviour, IInputHandler
 {
     public bool IsMoving { get; private set; }
     public Vector2 Dir { get; private set; }
@@ -10,6 +10,8 @@ public class CharacterInput : MonoBehaviour, ICharacterInput
         IsMoving = false;
         Dir = Vector2.zero;
         Vector2 CurrentDir = Vector2.zero;
+
+        #region character Movement
         if (Input.GetKey(KeyCode.A))
         {
             CurrentDir.x = -1;
@@ -36,5 +38,6 @@ public class CharacterInput : MonoBehaviour, ICharacterInput
         CurrentDir.Normalize();
         Dir = CurrentDir;
 
+        #endregion
     }
 }

@@ -12,7 +12,7 @@ public class EncounterGenerator : MonoBehaviour
  
   private int nextUpdate=1;
 
-  private TopDownCharacterController playerController;
+  private PlayerCharacterController playerController;
   public GameObject player;
 
 
@@ -20,7 +20,7 @@ public class EncounterGenerator : MonoBehaviour
 
   private void Start() {
       immunityCounter = SceneData.immunityCounter;
-      playerController = player.GetComponent<TopDownCharacterController>();
+      playerController = player.GetComponent<PlayerCharacterController>();
   }
 
   private void Update() {    

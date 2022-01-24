@@ -31,7 +31,6 @@ public class Interactable : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player In Range");
             isInRange = true;
         }
     }

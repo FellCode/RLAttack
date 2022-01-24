@@ -6,24 +6,17 @@ public class ChestController : MonoBehaviour
 {
 
     private SpriteRenderer spriteRenderer;
-
     public Sprite openSprite;
+    public ItemObject Item;
+    public int ItemAmount;
 
-    public void OpenChest()
+    public void OpenChest(GameObject Player)
     {
         spriteRenderer.sprite = openSprite;
-
-        //Item in Inventar legen
+        Player.GetComponent<PlayerCharacterController>().Inventory.AddItem(Item, ItemAmount);
     }
-    // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

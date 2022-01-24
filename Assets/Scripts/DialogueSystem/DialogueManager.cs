@@ -14,7 +14,7 @@ public partial class DialogueManager : MonoBehaviour
     private Conversation currentConvo;
     private Animator Animator;
     private DialogueState state = DialogueState.DONE;
-    private TopDownCharacterController PlayerController;
+    private PlayerCharacterController PlayerController;
 
     [SerializeField] GameObject Player;
 
@@ -33,7 +33,7 @@ public partial class DialogueManager : MonoBehaviour
     private void Start()
     {
         Animator = GetComponent<Animator>();
-        PlayerController = Player.GetComponent<TopDownCharacterController>();
+        PlayerController = Player.GetComponent<PlayerCharacterController>();
     }
 
     public void Update()
