@@ -40,20 +40,20 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void Update()
     {
-            PlayerAnimationManager.UpdatePlayerAnimation(DIRECTION_ANIMATION, CharacterInput.Dir);
-            PlayerRigidBody2D.velocity = speed * CharacterInput.Dir;
+        PlayerAnimationManager.UpdatePlayerAnimation(DIRECTION_ANIMATION, CharacterInput.Movement);
+        PlayerRigidBody2D.velocity = speed * CharacterInput.Movement;
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Debug.Log("Saving Stuff!");
-            Inventory.Safe();
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    Debug.Log("Saving Stuff!");
+        //    Inventory.Safe();
+        //}
 
-        if (Input.GetKey(KeyCode.KeypadEnter))
-        {
-            Debug.Log("Loading Stuff!");
-            Inventory.Load();
-        }
+        //if (Input.GetKey(KeyCode.KeypadEnter))
+        //{
+        //    Debug.Log("Loading Stuff!");
+        //    Inventory.Load();
+        //}
     }
 
     public bool CharIsMoving(){

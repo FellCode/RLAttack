@@ -38,10 +38,10 @@ public partial class DialogueManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKey(KeyCode.E))
-        {
-            ReadNext();
-        } 
+        //if (Input.GetKey(KeyCode.E))
+        //{
+        //    ReadNext();
+        //} 
     }
 
 

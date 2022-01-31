@@ -1,43 +1,29 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class CharacterInput : MonoBehaviour, IInputHandler
 {
     public bool IsMoving { get; private set; }
-    public Vector2 Dir { get; private set; }
+    public Vector2 Movement { get; private set; }
 
-    void Update()
+    public InputAction PlayerControls;
+
+    private void OnEnable()
     {
-        IsMoving = false;
-        Dir = Vector2.zero;
-        Vector2 CurrentDir = Vector2.zero;
-
-        #region character Movement
-        if (Input.GetKey(KeyCode.A))
-        {
-            CurrentDir.x = -1;
-            IsMoving = true;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            CurrentDir.x = 1;
-            IsMoving = true;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            CurrentDir.y = 1;
-            IsMoving = true;
-
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            CurrentDir.y = -1;
-            IsMoving = true;
-        }
-
-        CurrentDir.Normalize();
-        Dir = CurrentDir;
-
-        #endregion
+        PlayerControls.Enable();
     }
+
+    private void OnDisable()
+    {
+        PlayerControls.Disable();
+    }
+
+
+    private void Update()
+    {
+        Movement = PlayerControls.ReadValue<Vector2>();
+        IsMoving = !Movement.Equals(Vector2.zero);
+    }
+
+
+
 }
