@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestController : MonoBehaviour
+public class ChestController : MonoBehaviour,IInteractable
 {
 
     private SpriteRenderer spriteRenderer;
@@ -10,10 +10,15 @@ public class ChestController : MonoBehaviour
     public ItemObject Item;
     public int ItemAmount;
 
-    public void OpenChest(GameObject Player)
+    public void Interact()
+    {
+        OpenChest();
+    }
+
+    public void OpenChest()
     {
         spriteRenderer.sprite = openSprite;
-        Player.GetComponent<PlayerCharacterController>().Inventory.AddItem(Item, ItemAmount);
+        PlayerCharacterController.AddItemToPlayerInventoryStatic(Item, ItemAmount);
     }
     void Start()
     {

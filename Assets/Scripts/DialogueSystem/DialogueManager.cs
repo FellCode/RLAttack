@@ -49,7 +49,7 @@ public partial class DialogueManager : MonoBehaviour
     {
        if (instance.state.Equals(DialogueState.DONE))
         {
-            instance.PlayerController.enabled = false;
+            instance.PlayerController.enabled = false; //Durch Methode ersetzen, die auch Bewegung stoppt
             instance.Animator.SetBool("isOpen", true);
             instance.currentIndex = 0;
             instance.currentConvo = convo;
@@ -58,11 +58,10 @@ public partial class DialogueManager : MonoBehaviour
             instance.navButtonText.text = "V";
             instance.state = DialogueState.PROGRESS;
         }
-    }
 
-    public static bool IsOngoing()
-    {
-        return instance.state.Equals(DialogueState.PROGRESS);
+        if(DialogueState.PROGRESS.Equals(instance.state)){
+            instance.ReadNext();
+        }
     }
 
     public void ReadNext()
@@ -126,7 +125,6 @@ public partial class DialogueManager : MonoBehaviour
 
     private enum DialogueState
     {
-        START,
         PROGRESS,
         DONE,
         TYPING

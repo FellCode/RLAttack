@@ -13,11 +13,15 @@ public class Tooltip : MonoBehaviour
     private Text TooltipText;
     private RectTransform BackgroundTextTransform;
 
+    private ReportMousePosition MousePositionHandler;
+
     private void Awake()
     {
         instance = this;
         BackgroundTextTransform = transform.Find("Background").GetComponent<RectTransform>();
         TooltipText = transform.Find("Text").GetComponent<Text>();
+        MousePositionHandler = GetComponent<ReportMousePosition>();
+        gameObject.SetActive(false);
     }
 
     private void ShowTooltip(string tooltipString)
@@ -37,7 +41,7 @@ public class Tooltip : MonoBehaviour
     void Update()
     {
         Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), Mouse.current.position.ReadValue(), uiCamera, out localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), MousePositionHandler.getMousePosition(), uiCamera, out localPoint);
         transform.localPosition = localPoint;
     }
 

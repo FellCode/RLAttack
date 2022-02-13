@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -32,9 +30,11 @@ public class DisplayInventory : MonoBehaviour
     {
         for(int i = 0;i < inventory.Container.Count; i++)
         {
+            
             if (itemsDisplayed.ContainsKey(inventory.Container[i]))
             {
-                UpdateItemAmount(i);            }
+                UpdateItemAmount(i); 
+            }
             else
             {
                 createItemAtPosition(i);
@@ -49,6 +49,8 @@ public class DisplayInventory : MonoBehaviour
         obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.Container[slotPosition].amount.ToString("n0");
         obj.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.Container[slotPosition].item.name;
         obj.GetComponent<OnMouseOverItem>().onHoverText = inventory.Container[slotPosition].item.description;
+        itemsDisplayed.Add(inventory.Container[slotPosition],obj);
+        
     }
 
     private void UpdateItemAmount(int slotPosition)

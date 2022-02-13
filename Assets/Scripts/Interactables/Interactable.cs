@@ -12,13 +12,13 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInRange)
-        {
-            if (Input.GetKeyDown(interactKey))
-            {
-                interactAction.Invoke();
-            }
-        }
+        // if (isInRange)
+        // {
+        //     if (Input.GetKeyDown(interactKey))
+        //     {
+        //         interactAction.Invoke();
+        //     }
+        // }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
