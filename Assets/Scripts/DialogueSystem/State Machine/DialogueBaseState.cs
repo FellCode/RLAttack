@@ -4,9 +4,25 @@ using UnityEngine;
 
 public abstract class DialogueBaseState
 {
-    public abstract void EnterState(DialogueStateManager dialogue);
+    protected DialogueManager DialogueManager;
 
-    public abstract void UpdateState(DialogueStateManager dialogue);
+    public DialogueBaseState(DialogueManager dialogueManager)
+    {
+        DialogueManager = dialogueManager;
+    }
 
-    public abstract void Interact(DialogueStateManager dialogue);
+    public virtual void Read()
+    {
+        return;
+    }
+
+    public virtual void Start()
+    {
+        return;
+    }
+
+    public virtual void Interact()
+    {
+        return;
+    }
 }

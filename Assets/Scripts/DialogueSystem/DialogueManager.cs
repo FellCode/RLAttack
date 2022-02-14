@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class DialogueManager : MonoBehaviour
+public class DialogueManager : DialogueStateManager
 {
     public TextMeshProUGUI speakerName, dialogueText, navButtonText;
     public Image speakerSprite;
@@ -56,7 +56,8 @@ public partial class DialogueManager : MonoBehaviour
             instance.speakerName.text = "";
             instance.dialogueText.text = "";
             instance.navButtonText.text = "V";
-            instance.state = DialogueState.PROGRESS;
+            instance.Stat
+
         }
 
         if(DialogueState.PROGRESS.Equals(instance.state)){
