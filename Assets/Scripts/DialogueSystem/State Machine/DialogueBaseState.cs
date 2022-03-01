@@ -11,9 +11,9 @@ public abstract class DialogueBaseState
         DialogueManager = dialogueManager;
     }
 
-    public virtual void Read()
+    public virtual IEnumerator Type()
     {
-        return;
+        yield break;
     }
 
     public virtual void Start()

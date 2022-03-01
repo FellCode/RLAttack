@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class DialogueProgressState : DialogueBaseState
 {
-    public override void EnterState(DialogueStateManager dialogue){
-        PlayerController.enabled = false; //Durch Methode ersetzen, die auch Bewegung stoppt
-        Animator.SetBool("isOpen", true);
-        currentIndex = 0;
-        currentConvo = convo;
-        speakerName.text = "";
-        dialogueText.text = "";
-        navButtonText.text = "V";
-        State.EnterState()
+    public DialogueProgressState(DialogueManager dialogueManager) : base(dialogueManager)
+    {
     }
 
-    public override void UpdateState(DialogueStateManager dialogue){
-
+    public override void Start(){
+        DialogueManager.Interface.ShowDialogueWindow(true);
+        Interact();
     }
 
-    public override void Interact(DialogueStateManager dialogue){
+    public override void Interact(){
+        DialogueLine currentLine = DialogueManager.currentConvo.GetLineByIndex(DialogueManager.currentIndex);
+        if (DialogueManager.currentIndex > DialogueManager.currentConvo.GetLength())
+        {
+            DialogueManager.Interface.ShowDialogueWindow(false);
+            DialogueManager.getPlayerController().enabled = true;
+            DialogueManager.SetState(new DialogueIdleState(DialogueManager));
+        }
 
+        if(DialogueManager.currentIndex == DialogueManager.currentConvo.GetLength()){
+            DialogueManager.Interface.SetNavButton("X");
+        }
+
+        DialogueManager.Interface.SetSpeakerName(currentLine.speaker.name);
+        DialogueManager.Interface.SetSpeakerSprite(currentLine.speaker.GetSprite());
+        DialogueManager.StartCoroutine(Type());
+      
+        DialogueManager.currentIndex ++;
     }
 }

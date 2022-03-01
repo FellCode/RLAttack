@@ -18,7 +18,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     private List<Collider2D> colliders = new List<Collider2D>();
     private InputMaster inputMaster;
-    
 
     private void Awake()
     {
@@ -39,14 +38,12 @@ public class PlayerCharacterController : MonoBehaviour
     {
         Animator = GetComponent<Animator>();
         transform.localPosition = SceneData.playerPosition;
-        CharacterInput = GetComponent<CharacterInput>();
         PlayerAnimationManager = new PlayerAnimationManager(Animator);
         PlayerRigidBody2D = GetComponent<Rigidbody2D>();
     }
 
 
-    private void Update()
-    {
+    private void FixedUpdate() {
         Vector2 Movement = inputMaster.Player.Move.ReadValue<Vector2>();
         PlayerAnimationManager.UpdatePlayerAnimation(DIRECTION_ANIMATION, Movement);
         PlayerRigidBody2D.velocity = speed * Movement;
@@ -95,8 +92,7 @@ public class PlayerCharacterController : MonoBehaviour
     public void Interact(InputAction.CallbackContext context){
         if(context.performed && colliders.Count > 0){
             IInteractable interactable = FindClosestInteractable();
-                interactable.Interact();
-            
+            interactable.Interact(); 
         }
 
     }

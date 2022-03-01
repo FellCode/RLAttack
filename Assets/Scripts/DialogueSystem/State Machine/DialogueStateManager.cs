@@ -9,6 +9,6 @@ public abstract class DialogueStateManager : MonoBehaviour
 
     public void SetState(DialogueBaseState state){
         State = state;
-        State.EnterState(this);
+        State.Start();
     }
 }

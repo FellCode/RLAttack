@@ -9,10 +9,10 @@ public class SignController : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        ReadSign();
+        DialogueManager.StartConversation(convo);
     }
     public void ReadSign()
     {   
-            DialogueManager.StartConversation(convo);
+            
     }
 }

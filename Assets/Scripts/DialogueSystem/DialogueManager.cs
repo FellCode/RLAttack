@@ -5,16 +5,13 @@ using UnityEngine.UI;
 
 public class DialogueManager : DialogueStateManager
 {
-    public TextMeshProUGUI speakerName, dialogueText, navButtonText;
-    public Image speakerSprite;
-
-    private int currentIndex;
+    public int currentIndex;
     private static DialogueManager instance;
 
-    private Conversation currentConvo;
-    private Animator Animator;
-    private DialogueState state = DialogueState.DONE;
+    public Conversation currentConvo;
     private PlayerCharacterController PlayerController;
+
+    public DialogueUI Interface;
 
     [SerializeField] GameObject Player;
 
@@ -32,103 +29,18 @@ public class DialogueManager : DialogueStateManager
 
     private void Start()
     {
-        Animator = GetComponent<Animator>();
         PlayerController = Player.GetComponent<PlayerCharacterController>();
+        SetState(new DialogueIdleState(this));
     }
 
-    public void Update()
-    {
-        //if (Input.GetKey(KeyCode.E))
-        //{
-        //    ReadNext();
-        //} 
+    public PlayerCharacterController getPlayerController(){
+        return PlayerController;
     }
-
 
     public static void StartConversation(Conversation convo)
     {
-       if (instance.state.Equals(DialogueState.DONE))
-        {
-            instance.PlayerController.enabled = false; //Durch Methode ersetzen, die auch Bewegung stoppt
-            instance.Animator.SetBool("isOpen", true);
-            instance.currentIndex = 0;
-            instance.currentConvo = convo;
-            instance.speakerName.text = "";
-            instance.dialogueText.text = "";
-            instance.navButtonText.text = "V";
-            instance.Stat
-
-        }
-
-        if(DialogueState.PROGRESS.Equals(instance.state)){
-            instance.ReadNext();
-        }
-    }
-
-    public void ReadNext()
-    {
-        if (state.Equals(DialogueState.TYPING))
-        {
-            return;
-        }
-
-        state = DialogueState.PROGRESS;
-        if (currentConvo == null)
-            return;
-
-        if (currentIndex > currentConvo.GetLength())
-        {
-            Animator.SetBool("isOpen", false);
-            PlayerController.enabled = true;
-            state = DialogueState.DONE;
-            return;
-        }
-
-        if(currentIndex == currentConvo.GetLength()){
-            navButtonText.text = "X";
-        }
-
-        string Dialogue = currentConvo.GetLineByIndex(currentIndex).dialogue;
-        string SpeakerName = currentConvo.GetLineByIndex(currentIndex).speaker.GetName();
-        Sprite SpeakerSprite = currentConvo.GetLineByIndex(currentIndex).speaker.GetSprite();
-
-        speakerName.text = SpeakerName;
-        speakerSprite.sprite = SpeakerSprite;
-        StartCoroutine(TypeText(Dialogue));
-      
-        currentIndex++;
-    }
-
-
-    public IEnumerator TypeText(string text)
-    {
-        state = DialogueState.TYPING;
-        dialogueText.text = "";
-        bool complete = false;
-        int index = 0;
-
-        while (!complete)
-        {
-            dialogueText.text += text[index];
-            yield return new WaitForSeconds(0.02f);
-
-            if(index == text.Length - 1)
-            {
-                complete = true;
-            }
-            else
-            {
-                index++;
-            }
-        }
-        state = DialogueState.PROGRESS;
-    }
-
-    private enum DialogueState
-    {
-        PROGRESS,
-        DONE,
-        TYPING
+        instance.currentConvo = convo;
+        instance.SetState(new DialogueProgressState(instance));
     }
 }
 
