@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DialogueUI : MonoBehaviour
@@ -9,10 +11,17 @@ public class DialogueUI : MonoBehaviour
     public TextMeshProUGUI speakerName, dialogueText, navButtonText;
     public Image speakerSprite;
 
-    public Animator Animator;
+    public Animator animator;
+    private static readonly int IsOpen = Animator.StringToHash("isOpen");
 
-    public void SetSpeakerName(string name){
-        speakerName.text = name;
+
+    private void OnValidate()
+    {
+        animator = GetComponentInParent<Animator>();
+    }
+
+    public void SetSpeakerName(string newSpeakerName){
+        this.speakerName.text = newSpeakerName;
     }
 
     public void SetNavButton(string text){
@@ -33,6 +42,6 @@ public class DialogueUI : MonoBehaviour
     }
 
     public void ShowDialogueWindow(bool show){
-        Animator.SetBool("isOpen", show);
+        animator.SetBool(IsOpen, show);
     }
 }

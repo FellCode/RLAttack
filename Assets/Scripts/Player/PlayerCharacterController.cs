@@ -1,122 +1,138 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    private const string DIRECTION_ANIMATION = "Direction";
-
     public float speed;
-    public InventoryObject Inventory;
-    private Animator Animator;
-
-    private static PlayerCharacterController instance;
-    private IInputHandler CharacterInput;
-    private PlayerAnimationManager PlayerAnimationManager;
-    private Rigidbody2D PlayerRigidBody2D;
-
-    private List<Collider2D> colliders = new List<Collider2D>();
-    private InputMaster inputMaster;
+    public InventoryObject inventory;
+    
+    private static PlayerCharacterController _instance;
+    private readonly List<Collider2D> _colliders = new List<Collider2D>();
+    private const string DirectionAnimation = "Direction";
+    
+    private Animator _animator;
+    private PlayerAnimationManager _playerAnimationManager;
+    private Rigidbody2D _playerRigidBody2D;
+    private InputMaster _inputMaster;
+    private bool _movementIsAllowed = true;
 
     private void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
-
-        inputMaster = new InputMaster();
-        inputMaster.Player.Enable();
-        inputMaster.Player.Interact.performed += Interact;
     }
-    private void Start()
+    private void OnValidate()
     {
-        Animator = GetComponent<Animator>();
-        transform.localPosition = SceneData.playerPosition;
-        PlayerAnimationManager = new PlayerAnimationManager(Animator);
-        PlayerRigidBody2D = GetComponent<Rigidbody2D>();
+        _inputMaster = new InputMaster();
+        _inputMaster.Player.Enable();
+        _animator = GetComponent<Animator>();
+        _playerAnimationManager = new PlayerAnimationManager(_animator);
+        _playerRigidBody2D = GetComponent<Rigidbody2D>();
+        
+        
+        //ToDo: Player Spawning auslagern
+        transform.localPosition = SceneData.PlayerPosition;
     }
 
-
-    private void FixedUpdate() {
-        Vector2 Movement = inputMaster.Player.Move.ReadValue<Vector2>();
-        PlayerAnimationManager.UpdatePlayerAnimation(DIRECTION_ANIMATION, Movement);
-        PlayerRigidBody2D.velocity = speed * Movement;
-
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    Debug.Log("Saving Stuff!");
-        //    Inventory.Safe();
-        //}
-
-        //if (Input.GetKey(KeyCode.KeypadEnter))
-        //{
-        //    Debug.Log("Loading Stuff!");
-        //    Inventory.Load();
-        //}
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnEnable()
     {
-         if (!colliders.Contains(other) && other.CompareTag("Interactable")) 
-         {  
-             Debug.Log("Collided");
-             colliders.Add(other); 
-        }
+        _inputMaster.Player.Interact.performed += Interact;
+        _inputMaster.Player.Save.performed += SaveInventory;
+        _inputMaster.Player.Load.performed += LoadInventory;
+    }
+    
+    private void OnDisable()
+    {
+        _inputMaster.Player.Interact.performed -= Interact;
+        _inputMaster.Player.Save.performed -= SaveInventory;
+        _inputMaster.Player.Load.performed -= LoadInventory;
+    }
+
+    private void SaveInventory(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        inventory.Safe();
+    }
+    
+    
+    private void LoadInventory(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        inventory.Load();
+    }
+
+
+    private void FixedUpdate()
+    {
+        if (!_movementIsAllowed) return;
+        Vector2 movement = _inputMaster.Player.Move.ReadValue<Vector2>();
+        _playerAnimationManager.UpdatePlayerAnimation(DirectionAnimation, movement);
+        _playerRigidBody2D.velocity = speed * movement;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_colliders.Contains(other) || !other.CompareTag("Interactable")) return;
+        
+        _colliders.Add(other);
     }
 
     private void OnTriggerExit2D(Collider2D other) 
     {
-        colliders.Remove(other);
+        _colliders.Remove(other);
     }
 
     public bool CharIsMoving(){
-        return CharacterInput.IsMoving;
+        return _inputMaster.Player.Move.ReadValue<Vector2>() != Vector2.zero;
     }
 
     private void OnApplicationQuit()
     {
-        Inventory.Container.Clear();
+        inventory.container.Clear();
     }
 
-    public List<Collider2D> GetColliders () 
+    private void Interact(InputAction.CallbackContext context)
     {
-        return colliders; 
-    }
+        if (!context.performed || _colliders.Count <= 0) return;
+        IInteractable interactable = FindClosestInteractable();
 
-    public void Interact(InputAction.CallbackContext context){
-        if(context.performed && colliders.Count > 0){
-            IInteractable interactable = FindClosestInteractable();
-            interactable.Interact(); 
-        }
+        interactable?.Interact();
 
     }
-
-
-    public IInteractable FindClosestInteractable()
+    
+    //TODO: Auslagern in Service
+    private IInteractable FindClosestInteractable()
     {
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D currentCollider in _colliders)
         {
-            Vector3 diff = collider.gameObject.transform.position - position;
+            Vector3 diff = currentCollider.gameObject.transform.position - position;
             float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = collider.gameObject;
-                distance = curDistance;
-            }
+            if (!(curDistance < distance)) continue;
+            closest = currentCollider.gameObject;
+            distance = curDistance;
         }
         return closest.GetComponent<IInteractable>();
     }
 
     public static void AddItemToPlayerInventoryStatic(ItemObject obj, int amount){
-        instance.Inventory.AddItem(obj,amount);
+        _instance.inventory.AddItem(obj,amount);
+    }
+
+    public void SetMovementIsAllowed(bool allowed)
+    {
+        _movementIsAllowed = allowed;
     }
 }

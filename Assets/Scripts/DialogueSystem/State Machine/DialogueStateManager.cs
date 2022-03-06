@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class DialogueStateManager : MonoBehaviour
 {
-    protected DialogueBaseState State;
+    private DialogueBaseState _state;
 
 
     public void SetState(DialogueBaseState state){
-        State = state;
-        State.Start();
+        _state = state;
+        _state.Start();
     }
 }

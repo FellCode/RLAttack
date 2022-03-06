@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class DialogueTypingState : DialogueBaseState
 {   
-    private string currentText;
+    private string _currentText;
     public DialogueTypingState(DialogueManager dialogueManager) : base(dialogueManager)
     {
     }
 
     public override void Start(){
-        currentText = DialogueManager.currentConvo.GetLineByIndex(DialogueManager.currentIndex).dialogue;
-        DialogueManager.Interface.SetDialogueText("");
+        _currentText = DialogueManager.currentConvo.GetLineByIndex(DialogueManager.currentIndex).dialogue;
+        DialogueManager.dialogueInterface.SetDialogueText("");
         DialogueManager.StartCoroutine(Type());
 
        
     }
 
-    public override IEnumerator Type()
+    protected override IEnumerator Type()
     { 
-        foreach (char c in currentText){
-            DialogueManager.Interface.SetDialogueText( DialogueManager.Interface.GetDialogueText() + c);
+        foreach (char c in _currentText){
+            DialogueManager.dialogueInterface.SetDialogueText( DialogueManager.dialogueInterface.GetDialogueText() + c);
             yield return new WaitForSeconds(0.02f);
         }
     }

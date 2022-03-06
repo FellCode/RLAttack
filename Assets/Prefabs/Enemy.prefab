@@ -49,8 +49,8 @@ MonoBehaviour:
   shakeMagnitude: 0.4
   unitName: Dwayne
   unitLevel: 5
-  maxHP: 30
-  currentHP: 25
+  maxHp: 50
+  currentHp: 50
   moveSet: {fileID: 11400000, guid: e867bfa5384d0f7469cd5a678bb22cf6, type: 2}
 --- !u!82 &408210623393638349
 AudioSource:

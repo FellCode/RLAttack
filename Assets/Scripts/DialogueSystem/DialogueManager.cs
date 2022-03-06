@@ -1,46 +1,44 @@
-﻿using System.Collections;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+
 
 public class DialogueManager : DialogueStateManager
 {
     public int currentIndex;
-    private static DialogueManager instance;
+    private static DialogueManager _instance;
 
     public Conversation currentConvo;
-    private PlayerCharacterController PlayerController;
+    private PlayerCharacterController _playerController;
 
-    public DialogueUI Interface;
+    public DialogueUI dialogueInterface;
 
-    [SerializeField] GameObject Player;
+    [SerializeField] public GameObject player;
 
     private void Awake()
     {
-       if(instance == null)
-        {
-            instance = this;
-        } 
-        else
-        {
-            Destroy(gameObject); 
-        }
+       if(_instance == null)
+       {
+           _instance = this;
+       } 
+       else
+       {
+           Destroy(gameObject); 
+       }
     }
 
     private void Start()
     {
-        PlayerController = Player.GetComponent<PlayerCharacterController>();
+        _playerController = player.GetComponent<PlayerCharacterController>();
         SetState(new DialogueIdleState(this));
     }
 
-    public PlayerCharacterController getPlayerController(){
-        return PlayerController;
+    public PlayerCharacterController GetPlayerController(){
+        return _playerController;
     }
 
     public static void StartConversation(Conversation convo)
     {
-        instance.currentConvo = convo;
-        instance.SetState(new DialogueProgressState(instance));
+        _instance.currentConvo = convo;
+        _instance.SetState(new DialogueProgressState(_instance));
     }
 }
 

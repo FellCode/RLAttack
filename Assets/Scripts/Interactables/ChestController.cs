@@ -1,27 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ChestController : MonoBehaviour,IInteractable
 {
 
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     public Sprite openSprite;
-    public ItemObject Item;
-    public int ItemAmount;
+    public ItemObject item;
+    public int itemAmount;
+    private ShowNewItem _floatingText;
 
     public void Interact()
     {
         OpenChest();
     }
 
-    public void OpenChest()
+    private void OpenChest()
     {
-        spriteRenderer.sprite = openSprite;
-        PlayerCharacterController.AddItemToPlayerInventoryStatic(Item, ItemAmount);
+        _spriteRenderer.sprite = openSprite;
+        _floatingText.ShowFloatingText();
+        PlayerCharacterController.AddItemToPlayerInventoryStatic(item, itemAmount);
     }
-    void Start()
+
+    private void Start()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _floatingText = gameObject.GetComponentInChildren<ShowNewItem>();
     }
 }

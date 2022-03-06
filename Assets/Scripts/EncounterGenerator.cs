@@ -5,63 +5,63 @@ using UnityEngine.SceneManagement;
 
 public class EncounterGenerator : MonoBehaviour
 {
-  const int DEFAULT_ENCOUNTER_THRESHOLD = 10;
+  const int DefaultEncounterThreshold = 10;
 
-  private int currentEncounterThreshold = DEFAULT_ENCOUNTER_THRESHOLD;
-  private int immunityCounter;
+  private int _currentEncounterThreshold = DefaultEncounterThreshold;
+  private int _immunityCounter;
  
-  private int nextUpdate=1;
+  private int _nextUpdate=1;
 
-  private PlayerCharacterController playerController;
+  private PlayerCharacterController _playerController;
   public GameObject player;
 
 
   
 
   private void Start() {
-      immunityCounter = SceneData.immunityCounter;
-      playerController = player.GetComponent<PlayerCharacterController>();
+      _immunityCounter = SceneData.ImmunityCounter;
+      _playerController = player.GetComponent<PlayerCharacterController>();
   }
 
-  private void Update() {    
-    if(playerController.CharIsMoving()){
-      if(Time.time>=nextUpdate){
-        nextUpdate=Mathf.FloorToInt(Time.time)+1;
-        checkEncouter();
-      }
-    }
+  private void Update()
+  {
+      if (!_playerController.CharIsMoving()) return;
+      if (!(Time.time >= _nextUpdate)) return;
+      
+      _nextUpdate=Mathf.FloorToInt(Time.time)+1;
+      CheckEncounter();
   }
   
   
-  private void checkEncouter()
+  private void CheckEncounter()
   {   
-      int value = Random.Range(0, 100);
+      var value = Random.Range(0, 100);
 
-      if (value < currentEncounterThreshold && !isImmune())
+      if (value < _currentEncounterThreshold && !IsImmune())
       {
-        startEncounter();
+        StartEncounter();
       }
       else
       {
-        currentEncounterThreshold += 1;
-        if(immunityCounter > 0){
-            immunityCounter--;
+        _currentEncounterThreshold += 1;
+        if(_immunityCounter > 0){
+            _immunityCounter--;
         } else {
-            immunityCounter=0;
+            _immunityCounter=0;
         }
       }
   }
 
-  private bool isImmune(){
-      return immunityCounter > 0;
+  private bool IsImmune(){
+      return _immunityCounter > 0;
   }
 
-  void startEncounter(){
+  void StartEncounter(){
     //Play Encounter Animation
     //Screen Transition
-    currentEncounterThreshold = DEFAULT_ENCOUNTER_THRESHOLD;
-    SceneData.immunityCounter = 3;
-    SceneData.playerPosition = player.transform.position;
+    _currentEncounterThreshold = DefaultEncounterThreshold;
+    SceneData.ImmunityCounter = 3;
+    SceneData.PlayerPosition = player.transform.position;
     SceneManager.LoadScene("Combat");
     }
 }

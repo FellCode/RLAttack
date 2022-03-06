@@ -10,7 +10,6 @@ public class OnMouseOverItem : MonoBehaviour,IPointerEnterHandler, IPointerExitH
     public string onHoverText;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Hover");
         //If your mouse hovers over the GameObject with the script attached, output this message
         Tooltip.ShowTooltip_Static(onHoverText);
 

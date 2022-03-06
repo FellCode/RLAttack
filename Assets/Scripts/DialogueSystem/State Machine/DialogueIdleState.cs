@@ -9,11 +9,11 @@ public class DialogueIdleState : DialogueBaseState
     }
 
     public override void Start(){
-        DialogueManager.getPlayerController().enabled = true; //Durch Methode ersetzen, die auch Bewegung stoppt
+        DialogueManager.GetPlayerController().SetMovementIsAllowed(true); //Durch Methode ersetzen, die auch Bewegung stoppt
         DialogueManager.currentIndex = 0;
-        //DialogueManager.Interface.SetSpeakerName("");
-       // DialogueManager.Interface.SetDialogueText("");
-        //DialogueManager.Interface.SetNavButton("V");
+        DialogueManager.dialogueInterface.SetSpeakerName("");
+        DialogueManager.dialogueInterface.SetDialogueText("");
+        DialogueManager.dialogueInterface.SetNavButton("V");
     }
     public override void Interact(){
         DialogueManager.SetState(new DialogueProgressState(DialogueManager));

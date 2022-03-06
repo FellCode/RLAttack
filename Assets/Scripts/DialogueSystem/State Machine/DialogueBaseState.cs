@@ -4,14 +4,14 @@ using UnityEngine;
 
 public abstract class DialogueBaseState
 {
-    protected DialogueManager DialogueManager;
+    protected readonly DialogueManager DialogueManager;
 
-    public DialogueBaseState(DialogueManager dialogueManager)
+    protected DialogueBaseState(DialogueManager dialogueManager)
     {
         DialogueManager = dialogueManager;
     }
 
-    public virtual IEnumerator Type()
+    protected virtual IEnumerator Type()
     {
         yield break;
     }

@@ -1,68 +1,68 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DisplayInventory : MonoBehaviour
 {
     public InventoryObject inventory;
-    public int NUMBER_OF_COLUMNS;
-    public int X_SPACE_BETWEEN_ITEMS;
-    public int Y_SPACE_BETWEEN_ITEMS;
-    public int X_START;
-    public int Y_START;
+    public int numberOfColumns;
+    public int ySpaceBetweenItems;
+    public int xStart;
+    public int yStart;
     Dictionary<InventorySlot, GameObject> itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
-    void Start()
+    private void Start()
     {
         CreateDisplay();
     }
 
-    void Update()
+    private void Update()
     {
         UpdateDisplay();
     }
 
-    public Vector3 GetPosition(int i)
+    private Vector3 GetPosition(int i)
     {
-        return new Vector3(X_START, Y_START +(-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMNS)), 0f);
+        return new Vector3(xStart, yStart +(-ySpaceBetweenItems * (i / numberOfColumns)), 0f);
     }
 
-    public void UpdateDisplay()
+    private void UpdateDisplay()
     {
-        for(int i = 0;i < inventory.Container.Count; i++)
+        for(int i = 0;i < inventory.container.Count; i++)
         {
             
-            if (itemsDisplayed.ContainsKey(inventory.Container[i]))
+            if (itemsDisplayed.ContainsKey(inventory.container[i]))
             {
                 UpdateItemAmount(i); 
             }
             else
             {
-                createItemAtPosition(i);
+                CreateItemAtPosition(i);
             }
         }
     }
 
-    private void createItemAtPosition(int slotPosition)
+    private void CreateItemAtPosition(int slotPosition)
     {
-        var obj = Instantiate(inventory.Container[slotPosition].item.prefab, Vector3.zero, Quaternion.identity, transform);
+        var obj = Instantiate(inventory.container[slotPosition].item.prefab, Vector3.zero, Quaternion.identity, transform);
         obj.GetComponent<RectTransform>().localPosition = GetPosition(slotPosition);
-        obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.Container[slotPosition].amount.ToString("n0");
-        obj.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.Container[slotPosition].item.name;
-        obj.GetComponent<OnMouseOverItem>().onHoverText = inventory.Container[slotPosition].item.description;
-        itemsDisplayed.Add(inventory.Container[slotPosition],obj);
+        obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].amount.ToString("n0");
+        obj.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].item.name;
+        obj.GetComponent<OnMouseOverItem>().onHoverText = inventory.container[slotPosition].item.description;
+        itemsDisplayed.Add(inventory.container[slotPosition],obj);
         
     }
 
     private void UpdateItemAmount(int slotPosition)
     {
-        itemsDisplayed[inventory.Container[slotPosition]].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.Container[slotPosition].amount.ToString("n0");
+        itemsDisplayed[inventory.container[slotPosition]].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].amount.ToString("n0");
     }
 
     private void CreateDisplay()
     {
-        for (int i = 0; i < inventory.Container.Count; i++)
+        for (var i = 0; i < inventory.container.Count; i++)
         {
-            createItemAtPosition(i);
+            CreateItemAtPosition(i);
         }
     }
 }

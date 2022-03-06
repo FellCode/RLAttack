@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -129,9 +130,6 @@ MonoBehaviour:
   shakeMagnitude: 0.4
   unitName: Rocky
   unitLevel: 7
-  damage: 10
-  maxHP: 30
-  currentHP: 30
-  baseCritChance: 80
-  baseHitChance: 95
+  maxHp: 50
+  currentHp: 50
   moveSet: {fileID: 11400000, guid: 84139197065193c4086e0a65e67c3e4c, type: 2}

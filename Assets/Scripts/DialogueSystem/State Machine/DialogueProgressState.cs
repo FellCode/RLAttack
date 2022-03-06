@@ -9,26 +9,29 @@ public class DialogueProgressState : DialogueBaseState
     }
 
     public override void Start(){
-        DialogueManager.Interface.ShowDialogueWindow(true);
+        DialogueManager.dialogueInterface.ShowDialogueWindow(true);
+        DialogueManager.GetPlayerController().SetMovementIsAllowed(false);
         Interact();
     }
 
     public override void Interact(){
-        DialogueLine currentLine = DialogueManager.currentConvo.GetLineByIndex(DialogueManager.currentIndex);
+        
         if (DialogueManager.currentIndex > DialogueManager.currentConvo.GetLength())
         {
-            DialogueManager.Interface.ShowDialogueWindow(false);
-            DialogueManager.getPlayerController().enabled = true;
+            DialogueManager.dialogueInterface.ShowDialogueWindow(false);
+            DialogueManager.GetPlayerController().enabled = true;
             DialogueManager.SetState(new DialogueIdleState(DialogueManager));
         }
 
         if(DialogueManager.currentIndex == DialogueManager.currentConvo.GetLength()){
-            DialogueManager.Interface.SetNavButton("X");
+            DialogueManager.dialogueInterface.SetNavButton("X");
         }
+        
+        DialogueLine currentLine = DialogueManager.currentConvo.GetLineByIndex(DialogueManager.currentIndex);
 
-        DialogueManager.Interface.SetSpeakerName(currentLine.speaker.name);
-        DialogueManager.Interface.SetSpeakerSprite(currentLine.speaker.GetSprite());
-        DialogueManager.StartCoroutine(Type());
+        DialogueManager.dialogueInterface.SetSpeakerName(currentLine.speaker.name);
+        DialogueManager.dialogueInterface.SetSpeakerSprite(currentLine.speaker.GetSprite());
+        DialogueManager.SetState(new DialogueTypingState(DialogueManager));
       
         DialogueManager.currentIndex ++;
     }

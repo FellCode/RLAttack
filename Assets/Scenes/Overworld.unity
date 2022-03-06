@@ -366,8 +366,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentIndex: 0
   currentConvo: {fileID: 0}
-  Interface: {fileID: 290428726}
-  Player: {fileID: 1206498980}
+  dialogueInterface: {fileID: 290428726}
+  player: {fileID: 1206498980}
 --- !u!95 &290428725
 Animator:
   serializedVersion: 3
@@ -403,7 +403,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1645435824}
   navButtonText: {fileID: 632925406}
   speakerSprite: {fileID: 1904255720}
-  Animator: {fileID: 290428725}
+  animator: {fileID: 290428725}
 --- !u!1 &383734435
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,8 +501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d0e62721e731a47916713e45e4ef50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  lerpSpeed: 10
+  target: {fileID: 1206498987}
+  lerpSpeed: 3
 --- !u!114 &383734440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2785,8 +2785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openSprite: {fileID: 21300040, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
-  Item: {fileID: 11400000, guid: a9e5e0fd28a95e64fa490679c6ccb40c, type: 2}
-  ItemAmount: 2
+  item: {fileID: 11400000, guid: a9e5e0fd28a95e64fa490679c6ccb40c, type: 2}
+  itemAmount: 2
 --- !u!1 &587833888
 GameObject:
   m_ObjectHideFlags: 0
@@ -3348,6 +3348,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1969950337}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1206498987 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5628018141983903106, guid: ef67ba864d1ecc042b5f4cf48455c0a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1969950337}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1211041765
 GameObject:
   m_ObjectHideFlags: 0
@@ -3564,11 +3570,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 42aa53802f375e04ca58cf42aa064718, type: 2}
-  NUMBER_OF_COLUMNS: 1
-  X_SPACE_BETWEEN_ITEMS: 1
-  Y_SPACE_BETWEEN_ITEMS: 35
-  X_START: -120
-  Y_START: 190
+  numberOfColumns: 1
+  ySpaceBetweenItems: 0
+  xStart: -120
+  yStart: 0
 --- !u!1 &1329853054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3708,7 +3713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1333306302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3721,7 +3726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd09222a62be443caed6e83062488d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1206498980}
 --- !u!4 &1333306303
 Transform:
   m_ObjectHideFlags: 0
@@ -4278,6 +4283,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 42aa53802f375e04ca58cf42aa064718,
         type: 2}
+    - target: {fileID: -8843795338540976476, guid: ef67ba864d1ecc042b5f4cf48455c0a6,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 11400000, guid: 42aa53802f375e04ca58cf42aa064718,
+        type: 2}
     - target: {fileID: 2188515379826930237, guid: ef67ba864d1ecc042b5f4cf48455c0a6,
         type: 3}
       propertyPath: m_Camera
@@ -4322,12 +4333,12 @@ PrefabInstance:
     - target: {fileID: 5628018141983903106, guid: ef67ba864d1ecc042b5f4cf48455c0a6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.24203604
       objectReference: {fileID: 0}
     - target: {fileID: 5628018141983903106, guid: ef67ba864d1ecc042b5f4cf48455c0a6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.153136
       objectReference: {fileID: 0}
     - target: {fileID: 5628018141983903106, guid: ef67ba864d1ecc042b5f4cf48455c0a6,
         type: 3}
