@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName="new Moveset", menuName="Moves/New MoveSet")]
 public class MoveSet : ScriptableObject
 {
-    [SerializeField] private Attack[] allAttacks;
+    [SerializeField] private MoveBase[] allAttacks;
 
-    public Attack getAttackByIndex(int index)
+    public MoveBase getMoveByIndex(int index)
     {
         return allAttacks[index];
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Combat;
 using UnityEngine;
 
 public class ConditionsDB
@@ -17,6 +18,7 @@ public class ConditionsDB
                     OnAfterTurn = unit =>
                     {
                         unit.TakeDamage(unit.maxHp / 8);
+                        unit.StatusUpdates.Enqueue($"{unit.name} erleidet Schaden durch die Alkoholvergiftung");
                     },
                     StartMessage = "erleidet eine Alkoholvergiftung"
                 }

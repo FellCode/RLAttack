@@ -9,7 +9,7 @@ public class DialogueIdleState : DialogueBaseState
     }
 
     public override void Start(){
-        DialogueManager.GetPlayerController().SetMovementIsAllowed(true); //Durch Methode ersetzen, die auch Bewegung stoppt
+        DialogueManager.GetPlayerController().ToggleMovement(true); //Durch Methode ersetzen, die auch Bewegung stoppt
         DialogueManager.currentIndex = 0;
         DialogueManager.dialogueInterface.SetSpeakerName("");
         DialogueManager.dialogueInterface.SetDialogueText("");

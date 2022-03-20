@@ -10,7 +10,6 @@ public class DialogueProgressState : DialogueBaseState
 
     public override void Start(){
         DialogueManager.dialogueInterface.ShowDialogueWindow(true);
-        DialogueManager.GetPlayerController().SetMovementIsAllowed(false);
         Interact();
     }
 
