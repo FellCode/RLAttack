@@ -48,21 +48,17 @@ namespace Combat
             
             playerHUD.ToggleMenu(false);
             playerHUD.ToggleAttackMenu(false);
-        
-            var message = $"A wild {_enemyUnit.unitName} approaches";
-            StartCoroutine(TypeText(message));
-
-
-
+            
             _playerUnit.battleHudReference.SetupHUD(_playerUnit);
             _enemyUnit.battleHudReference.SetupHUD(_enemyUnit);
-
+            
             playerHUD.attack1.text = _playerUnit.moveSet.getMoveByIndex(0).name;
-            playerHUD.attack2.text = _playerUnit.moveSet.getMoveByIndex(1).name;
-            playerHUD.attack3.text = _playerUnit.moveSet.getMoveByIndex(2).name;
-            playerHUD.attack4.text = _playerUnit.moveSet.getMoveByIndex(3).name;
-
-            yield return new WaitForSeconds(2f);
+            //playerHUD.attack2.text = _playerUnit.moveSet.getMoveByIndex(1).name;
+            //playerHUD.attack3.text = _playerUnit.moveSet.getMoveByIndex(2).name;
+            //playerHUD.attack4.text = _playerUnit.moveSet.getMoveByIndex(3).name;
+        
+            var message = $"A wild {_enemyUnit.unitName} approaches";
+            yield return TypeText(message);
 
             PlayerTurn();
         }
@@ -73,10 +69,9 @@ namespace Combat
 
             MoveBase playerMove = _playerUnit.moveSet.getMoveByIndex(attackIndex);
 
-            StartCoroutine(ApplyMove(playerMove, _playerUnit, _enemyUnit));
-        
-            yield return new WaitForSeconds(2f);
+            yield return ApplyMove(playerMove, _playerUnit, _enemyUnit);
 
+            StopAllCoroutines();
             StartCoroutine(EnemyTurn());
 
         }
@@ -84,6 +79,8 @@ namespace Combat
         private IEnumerator ApplyMove(MoveBase move, Unit source, Unit target)
         {
             bool isDead = false;
+            
+            yield return TypeText($"{source.unitName} setzt {move.name} ein");
 
             if (move.Category() == Category.DIRECT)
             {
@@ -135,21 +132,21 @@ namespace Combat
             {
                 var message = unit.StatusUpdates.Dequeue();
                 yield return TypeText(message);
+                
             }
         }
 
         private void PlayerTurn(){
             playerHUD.ToggleMenu(true);
             const string message = "Choose an action:";
-            StartCoroutine(TypeText(message));
+            dialogueText.text = message;
         }
 
         private IEnumerator EnemyTurn()
         {
             MoveBase enemyMove = _enemyUnit.GetRandomMove();
-            StartCoroutine(ApplyMove(enemyMove, _enemyUnit, _playerUnit));
+            yield return ApplyMove(enemyMove, _enemyUnit, _playerUnit);
             PlayerTurn();
-            yield break;
         }
 
         public void OnAttackButton(){
@@ -160,6 +157,18 @@ namespace Combat
         public void OnMoveButton(int index)
         {
             StartCoroutine(PlayerAttack(index));
+        }
+
+        public void OnRunButton()
+        {
+            StartCoroutine(Run());
+        }
+
+        private IEnumerator Run()
+        {
+            StartCoroutine(TypeText("You ran away"));
+            SceneManager.LoadScene("Overworld");
+            yield break;
         }
     
         private void EndBattle()
@@ -191,6 +200,8 @@ namespace Combat
                 dialogueText.text += letter;
                 yield return new WaitForSeconds(letterPause);
             }
+            
+            yield return new WaitForSeconds(1f);
         }
     }
 }

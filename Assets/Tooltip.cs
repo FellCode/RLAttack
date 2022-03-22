@@ -6,31 +6,31 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
-    private static Tooltip instance;
+    private static Tooltip _instance;
 
     [SerializeField]
     private Camera uiCamera;
-    private Text TooltipText;
-    private RectTransform BackgroundTextTransform;
+    private Text _tooltipText;
+    private RectTransform _backgroundTextTransform;
 
-    private ReportMousePosition MousePositionHandler;
+    private ReportMousePosition _mousePositionHandler;
 
     private void Awake()
     {
-        instance = this;
-        BackgroundTextTransform = transform.Find("Background").GetComponent<RectTransform>();
-        TooltipText = transform.Find("Text").GetComponent<Text>();
-        MousePositionHandler = GetComponent<ReportMousePosition>();
+        _instance = this;
+        _backgroundTextTransform = transform.Find("Background").GetComponent<RectTransform>();
+        _tooltipText = transform.Find("Text").GetComponent<Text>();
+        _mousePositionHandler = GetComponent<ReportMousePosition>();
         gameObject.SetActive(false);
     }
 
     private void ShowTooltip(string tooltipString)
     {
         gameObject.SetActive(true);
-        TooltipText.text = tooltipString;
-        float textPaddingSize = 4f;
-        Vector2 backgroundSize = new Vector2(TooltipText.preferredWidth + textPaddingSize*2f, TooltipText.preferredHeight + textPaddingSize * 2f);
-        BackgroundTextTransform.sizeDelta = backgroundSize;
+        _tooltipText.text = tooltipString;
+        const float textPaddingSize = 4f;
+        Vector2 backgroundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize*2f, _tooltipText.preferredHeight + textPaddingSize * 2f);
+        _backgroundTextTransform.sizeDelta = backgroundSize;
     }
 
     private void HideTooltip()
@@ -38,20 +38,19 @@ public class Tooltip : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-        Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), MousePositionHandler.getMousePosition(), uiCamera, out localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), _mousePositionHandler.getMousePosition(), uiCamera, out var localPoint);
         transform.localPosition = localPoint;
     }
 
     public static void ShowTooltip_Static(string tooltipString)
     {
-        instance.ShowTooltip(tooltipString);
+        _instance.ShowTooltip(tooltipString);
     }
 
     public static void HideTooltip_Static()
     {
-        instance.HideTooltip();
+        _instance.HideTooltip();
     }
 }

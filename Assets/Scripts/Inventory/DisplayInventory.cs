@@ -10,7 +10,7 @@ public class DisplayInventory : MonoBehaviour
     public int ySpaceBetweenItems;
     public int xStart;
     public int yStart;
-    Dictionary<InventorySlot, GameObject> itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
+    readonly Dictionary<InventorySlot, GameObject> _itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
     private void Start()
     {
         CreateDisplay();
@@ -31,7 +31,7 @@ public class DisplayInventory : MonoBehaviour
         for(int i = 0;i < inventory.container.Count; i++)
         {
             
-            if (itemsDisplayed.ContainsKey(inventory.container[i]))
+            if (_itemsDisplayed.ContainsKey(inventory.container[i]))
             {
                 UpdateItemAmount(i); 
             }
@@ -49,13 +49,13 @@ public class DisplayInventory : MonoBehaviour
         obj.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].amount.ToString("n0");
         obj.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].item.name;
         obj.GetComponent<OnMouseOverItem>().onHoverText = inventory.container[slotPosition].item.description;
-        itemsDisplayed.Add(inventory.container[slotPosition],obj);
+        _itemsDisplayed.Add(inventory.container[slotPosition],obj);
         
     }
 
     private void UpdateItemAmount(int slotPosition)
     {
-        itemsDisplayed[inventory.container[slotPosition]].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].amount.ToString("n0");
+        _itemsDisplayed[inventory.container[slotPosition]].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventory.container[slotPosition].amount.ToString("n0");
     }
 
     private void CreateDisplay()

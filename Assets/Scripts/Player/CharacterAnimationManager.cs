@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerAnimationManager : MonoBehaviour
+public class CharacterAnimationManager : MonoBehaviour
 {
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     [SerializeField]

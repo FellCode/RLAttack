@@ -18,7 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
     internal InputMaster InputMaster;
     
     [SerializeField]
-    internal PlayerAnimationManager playerAnimationManager;
+    internal CharacterAnimationManager characterAnimationManager;
     [SerializeField]
     internal CharacterInputManager characterInputManager;
     [SerializeField]

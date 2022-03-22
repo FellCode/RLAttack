@@ -18,7 +18,7 @@ public class ConditionsDB
                     OnAfterTurn = unit =>
                     {
                         unit.TakeDamage(unit.maxHp / 8);
-                        unit.StatusUpdates.Enqueue($"{unit.name} erleidet Schaden durch die Alkoholvergiftung");
+                        unit.StatusUpdates.Enqueue($"{unit.unitName} erleidet Schaden durch die Alkoholvergiftung");
                     },
                     StartMessage = "erleidet eine Alkoholvergiftung"
                 }

@@ -56,12 +56,13 @@ namespace Combat
 
       public void OnAfterTurn()
       {
-         Condition.OnAfterTurn?.Invoke(this);
+         Condition?.OnAfterTurn?.Invoke(this);
       }
 
       public MoveBase GetRandomMove()
       {
-         return moveSet.getMoveByIndex(Random.Range(0, 3));
+         //return moveSet.getMoveByIndex(Random.Range(0, 3));
+         return moveSet.getMoveByIndex(0);
       }
    }
 }

@@ -132,4 +132,5 @@ MonoBehaviour:
   unitLevel: 7
   maxHp: 50
   currentHp: 50
-  moveSet: {fileID: 11400000, guid: 84139197065193c4086e0a65e67c3e4c, type: 2}
+  moveSet: {fileID: 11400000, guid: fcb7a382714fd1a4eaa807ef784d926e, type: 2}
+  battleHudReference: {fileID: 0}
