@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "New Move", menuName = "Moves/New Move")]
 public class MoveBase : ScriptableObject
 {
-    [SerializeField] private string name;
+    [SerializeField] private string moveName;
     [TextArea] [SerializeField] private string description;
     [SerializeField] private int power;
     [SerializeField] private int accuracy;
@@ -14,9 +12,9 @@ public class MoveBase : ScriptableObject
     [SerializeField] private Category category;
     [SerializeField] private MoveEffects effects;
 
-    public string Name()
+    public string MoveName()
     {
-        return name;
+        return moveName;
     }
     
     public string Description()
@@ -72,8 +70,5 @@ public class MoveEffects
 {
     [SerializeField] ConditionID status;
 
-    public ConditionID Status
-    {
-        get { return status; }
-    }
+    public ConditionID Status => status;
 }

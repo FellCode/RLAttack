@@ -1,24 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+
 public class ReportMousePosition : MonoBehaviour
-{
-    private Vector2 mousePosition;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+{   
+    private Vector2 _mousePosition;
+    private PointerEventData _pointerEventData;
+    [SerializeField]
+    private EventSystem eventSystem;
+    [SerializeField]
+    private GraphicRaycaster raycaster;
 
     // Update is called once per frame
     void Update()
     {
-         mousePosition = Mouse.current.position.ReadValue();
-        
+         _mousePosition = Mouse.current.position.ReadValue();
+         
+         _pointerEventData = new PointerEventData(eventSystem)
+         {
+             position = _mousePosition
+         };
+         
+         List<RaycastResult> results = new List<RaycastResult>();
+         
+         raycaster.Raycast(_pointerEventData, results);
+ 
+         if(results.Count > 0) Debug.Log("Hit " + results[0].gameObject.name);
     }
 
-    public Vector2 getMousePosition(){
-        return mousePosition;
+    public Vector2 GetMousePosition()
+    {
+        return _mousePosition;
     }
 }

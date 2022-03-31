@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class EncounterGenerator : MonoBehaviour
 {
@@ -14,6 +11,7 @@ public class EncounterGenerator : MonoBehaviour
 
   private PlayerCharacterController _playerController;
   public GameObject player;
+  private LevelLoaderScript _levelLoader;
 
 
   
@@ -21,6 +19,7 @@ public class EncounterGenerator : MonoBehaviour
   private void Start() {
       _immunityCounter = SceneData.ImmunityCounter;
       _playerController = player.GetComponent<PlayerCharacterController>();
+      _levelLoader = GameObject.Find("LevelLoader").GetComponent<LevelLoaderScript>();
   }
 
   private void Update()
@@ -58,10 +57,9 @@ public class EncounterGenerator : MonoBehaviour
 
   void StartEncounter(){
     //Play Encounter Animation
-    //Screen Transition
     _currentEncounterThreshold = DefaultEncounterThreshold;
     SceneData.ImmunityCounter = 3;
     SceneData.PlayerPosition = player.transform.position;
-    SceneManager.LoadScene("Combat");
-    }
+    StartCoroutine(_levelLoader.StartCombatScene());
+  }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cdd5de357ec524f93db148df47860d, type: 3}
   m_Name: Whiskey
   m_EditorClassIdentifier: 
-  name: Whiskey
-  description: 
+  moveName: Whiskey
+  description: Forced to down a Whiskey Bottle
   power: 0
   accuracy: 100
   critChance: 0

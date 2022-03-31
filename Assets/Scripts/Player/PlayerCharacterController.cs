@@ -1,31 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+
 
 public class PlayerCharacterController : MonoBehaviour
 {
     public float speed;
     public InventoryObject inventory;
-    
+
     private static PlayerCharacterController _instance;
-    
+
 
     internal Animator PlayerAnimator;
     internal Rigidbody2D PlayerRigidBody2D;
     internal InputMaster InputMaster;
-    
-    [SerializeField]
-    internal CharacterAnimationManager characterAnimationManager;
-    [SerializeField]
-    internal CharacterInputManager characterInputManager;
-    [SerializeField]
-    internal CharacterMovementManager characterMovementManager;
-    [SerializeField] 
-    internal CharacterCollisionManager characterCollisionManager;
-    
+
+    [SerializeField] internal CharacterAnimationManager characterAnimationManager;
+    [SerializeField] internal CharacterInputManager characterInputManager;
+    [SerializeField] internal CharacterMovementManager characterMovementManager;
+    [SerializeField] internal CharacterCollisionManager characterCollisionManager;
+
 
     private void Awake()
     {
@@ -37,6 +30,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
         InputMaster = new InputMaster();
         PlayerAnimator = GetComponent<Animator>();
         PlayerRigidBody2D = GetComponent<Rigidbody2D>();
@@ -49,7 +43,7 @@ public class PlayerCharacterController : MonoBehaviour
         if (!context.performed) return;
         inventory.Safe();
     }
-    
+
     internal void LoadInventory(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
@@ -68,20 +62,19 @@ public class PlayerCharacterController : MonoBehaviour
 
     internal void Interact(InputAction.CallbackContext context)
     {
-        if (!context.performed || characterCollisionManager._colliders.Count <= 0) return;
+        if (!context.performed || characterCollisionManager.Colliders.Count <= 0) return;
         IInteractable interactable = FindClosestInteractable();
 
         interactable?.Interact();
-
     }
-    
+
     //TODO: Auslagern in Service
     private IInteractable FindClosestInteractable()
     {
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (Collider2D currentCollider in characterCollisionManager._colliders)
+        foreach (Collider2D currentCollider in characterCollisionManager.Colliders)
         {
             Vector3 diff = currentCollider.gameObject.transform.position - position;
             float curDistance = diff.sqrMagnitude;
@@ -89,11 +82,13 @@ public class PlayerCharacterController : MonoBehaviour
             closest = currentCollider.gameObject;
             distance = curDistance;
         }
+
         return closest.GetComponent<IInteractable>();
     }
 
-    public static void AddItemToPlayerInventoryStatic(ItemObject obj, int amount){
-        _instance.inventory.AddItem(obj,amount);
+    public static void AddItemToPlayerInventoryStatic(ItemObject obj, int amount)
+    {
+        _instance.inventory.AddItem(obj, amount);
     }
 
     public void ToggleMovement(bool canMove)

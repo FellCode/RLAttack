@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerMoveSet
   m_EditorClassIdentifier: 
   allAttacks:
-  - {fileID: 11400000, guid: e5c0973ff42d6e144a19aa5907c48448, type: 2}
+  - {fileID: 11400000, guid: 95f6305e1cfdc410a8cc104ecb5c41a1, type: 2}

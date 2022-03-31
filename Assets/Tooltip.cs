@@ -40,7 +40,7 @@ public class Tooltip : MonoBehaviour
 
     private void Update()
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), _mousePositionHandler.getMousePosition(), uiCamera, out var localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), _mousePositionHandler.GetMousePosition(), uiCamera, out var localPoint);
         transform.localPosition = localPoint;
     }
 

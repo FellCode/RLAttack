@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Combat
 {
@@ -21,10 +23,9 @@ namespace Combat
 
       public BattleHUD battleHudReference;
 
-      public bool TakeDamage(int dmg){
+      public void TakeDamage(int dmg){
          currentHp -= dmg;
          StartCoroutine(Shake(shakeDuration,shakeMagnitude));
-         return currentHp <=0;
       }
       public void SetCondition(ConditionID conditionId)
       {
@@ -63,6 +64,11 @@ namespace Combat
       {
          //return moveSet.getMoveByIndex(Random.Range(0, 3));
          return moveSet.getMoveByIndex(0);
+      }
+
+      public bool UnitIsDead()
+      {
+         return currentHp <= 0;
       }
    }
 }

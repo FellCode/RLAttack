@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class ChestController : MonoBehaviour,IInteractable
+public class ChestController : MonoBehaviour, IInteractable
 {
 
     private SpriteRenderer _spriteRenderer;

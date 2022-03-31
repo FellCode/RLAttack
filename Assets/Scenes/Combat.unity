@@ -162,8 +162,7 @@ MonoBehaviour:
   state: 0
   playerHUD: {fileID: 1082147386}
   enemyHUD: {fileID: 89667421}
-  dialogueText: {fileID: 1437991200}
-  letterPause: 0.02
+  dialogueText: {fileID: 1041908271}
 --- !u!4 &18791
 Transform:
   m_ObjectHideFlags: 0
@@ -1975,6 +1974,7 @@ GameObject:
   - component: {fileID: 1041908268}
   - component: {fileID: 1041908270}
   - component: {fileID: 1041908269}
+  - component: {fileID: 1041908271}
   m_Layer: 5
   m_Name: DialoguePanel
   m_TagString: Untagged
@@ -2041,6 +2041,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041908267}
   m_CullTransparentMesh: 0
+--- !u!114 &1041908271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041908267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb86a0036ff64929b96549438698bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  letterPause: 0.02
 --- !u!1 &1072560955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,7 +2253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 204, y: -46}
+  m_AnchoredPosition: {x: 229, y: -46}
   m_SizeDelta: {x: 200, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082147384
@@ -3075,8 +3088,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -129, y: 1}
-  m_SizeDelta: {x: 400, y: 40}
+  m_AnchoredPosition: {x: 13.05, y: 1}
+  m_SizeDelta: {x: 684.1, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437991200
 MonoBehaviour:
