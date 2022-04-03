@@ -30,7 +30,14 @@ public class ReportMousePosition : MonoBehaviour
          
          raycaster.Raycast(_pointerEventData, results);
  
-         if(results.Count > 0) Debug.Log("Hit " + results[0].gameObject.name);
+         if(results.Count > 0) {
+            Tooltip.ShowTooltip_Static(results[0].gameObject.GetComponent<OnMouseOverItem>().onHoverText);
+         }
+         
+         else
+         {
+             Tooltip.HideTooltip_Static();
+         }
     }
 
     public Vector2 GetMousePosition()
